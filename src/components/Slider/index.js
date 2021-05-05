@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SliderContainer } from './style';
-import "swiper/dist/css/swiper.css";
-import Swiper from "swiper";
+import 'swiper/swiper-bundle.css'
+import Swiper, { Pagination, Autoplay } from 'swiper';
 
 // 简易滑动框
 function Slider(props) {
@@ -9,8 +9,9 @@ function Slider(props) {
     const { bannerList } = props;
 
     useEffect(() => {
+        Swiper.use([Pagination, Autoplay])
         if (bannerList.length && !sliderSwiper) {
-            let newSliderSwiper = new Swiper(".slider-container", {
+            let sliderSwiper = new Swiper(".slider-container", {
                 loop: true,
                 autoplay: {
                     delay: 3000,
@@ -18,7 +19,7 @@ function Slider(props) {
                 },
                 pagination: { el: '.swiper-pagination' },
             });
-            setSliderSwiper(newSliderSwiper);
+            setSliderSwiper(sliderSwiper);
         }
     }, [bannerList.length, sliderSwiper])
 
@@ -28,7 +29,7 @@ function Slider(props) {
             <div className="slider-container">
                 <div className="swiper-wrapper">
                     {
-                        bannerList.map((slider) => {
+                        bannerList.map(slider => {
                             return (
                                 <div className="swiper-slide" key={slider.imageUrl}>
                                     <div className="slider-nav">
